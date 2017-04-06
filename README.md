@@ -53,13 +53,12 @@ format('lalal{0}wowowo{1}hahah{2}')('-A-', '-B-', '-C') // lala-A-wowo-B-haha-C
 
 ### 实现
 要求1: 可填充简单数据
-    - tpl('<div>{{data}}</div>', {data: 'tpl'}) // '<div>tpl</div>'
 ```javascript
 const tpl = (str, data) => str.replace(/{{(.*)}}/g, (match, p) => data[p])
+tpl('<div>{{data}}</div>', {data: 'tpl'}) // '<div>tpl</div>'
 ```
 
 要求2: 可填充嵌套数据
-    - tpl('<div>{{data.a}}</div>', {data: {a: 'tpl'}}) // '<div>tpl</div>'
 ```javascript
 // 可根据占位符 {{data.a}} 中的 . 来获得数据的依赖路径，从而得到对应的数据
 // 由于 使用 "." 连接，所以其前后应为合法的变量名，因此需重新构造正则
@@ -82,6 +81,7 @@ function tpl (str, data) {
         return String(result) || match // 需转成字符串，因为可能遇到 0, null 等数据
     })
 }
+tpl('<div>{{data.a}}</div>', {data: {a: 'tpl'}}) // '<div>tpl</div>'
 ```
 
 最终代码:
@@ -104,7 +104,7 @@ function tpl (str, data) {
 - 缺点: 无法在模板中使用表达式，所有数据都得事先计算好再填入，且填充的数据应为基础类型，灵活性差，难以满足复杂的需求
 
 ### 资料
-[更多详细关于 replace 的详细语法看这里](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
+[详细语法](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
 
 ***
 
@@ -142,6 +142,8 @@ console.log([str1, str2, str3, str4, str5, str6].every(s => s === '123tpl456'))
 
 ### 案例
 - 由于直接用模板字符串当模板引擎了，所以就直接写个组件吧
+    - [演示](http://codepen.io/Away0x/pen/dvEGpL)
+    - [代码](https://github.com/Away0x/learning-template/blob/master/src/tplstr.pagination/page.js)
 - 用这种方法写模板需注意的是一定要细分组件(很函数式，有种写 jsx 的既视感)
 
 ### 资料
