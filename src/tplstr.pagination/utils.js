@@ -26,3 +26,7 @@ function count_start_and_end_page(currentPage=1, totalPage=1, howMuchPageButtons
   }
   return result; // 返回一个区间数组，供生成区间页码按钮
 }
+
+function can (boolean, str) {
+    return boolean ? str: ''
+}

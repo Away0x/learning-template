@@ -11,6 +11,51 @@
     <script src="page.js"></script>
 </head>
 <body>
+    <div id="show1"></div>
+    <hr>
+    <div id="page1"></div>
 
+    <hr>
+
+    <div id="show2"></div>
+    <hr>
+    <div id="page2"></div>
+
+    <script>
+        const
+            page1 = pagination('#page1'),
+            page2 = pagination('#page2'),
+            renderPage1 = (curPage, cb) => {
+                page1.render({
+                    currentPage: curPage || 1, totalPage: 100,
+                    toPage (page_index) {
+                        cb && cb({page: page_index})
+                    }
+                })
+            },
+            renderPage2 = (curPage, cb) => {
+                page2.render({
+                    currentPage: curPage || 1, totalPage: 5,
+                    canJump: false,
+                    toPage (page_index) {
+                        cb && cb({page: page_index})
+                    }
+                })
+            }
+
+        createPage1({page: 50})
+        createPage2({page: 2})
+
+        function createPage1 ({page}) {
+            document.querySelector('#show1').textContent = `第 ${page} 页`
+
+            renderPage1(page, createPage1)
+        }
+        function createPage2 ({page}) {
+            document.querySelector('#show2').textContent = `第 ${page} 页`
+
+            renderPage2(page, createPage2)
+        }
+    </script>
 </body>
 </html>
