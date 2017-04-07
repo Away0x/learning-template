@@ -1,4 +1,4 @@
-# 模板引擎实现
+# 从零开始实现前端模板引擎
 
 ## replace
 ### 介绍
@@ -20,7 +20,7 @@ replace 是字符串提供的一个超级强大的方法，这里只介绍简单
                 // match 为 'abc12345#$*%'        : 正则匹配的文本
                 // p1,p2,p3 分别为 abc 12345 #$*% : 即每个小组匹配到的文本, pn 表示有 n 个小组
                 // offset 为 0                    : 匹配到的子字符串在原字符串中的偏移量。
-                //      （比如，如果原字符串是“abcd”，匹配到的子字符串时“bc”，那么这个参数将是1）
+                //      （比如，如果原字符串是'abcd'，匹配到的子字符串时'bc'，那么这个参数将是1）
                 // string 为 'abc12345#$*%'       : 被匹配的原始字符串
                 return [p1, p2, p3].join(' - ');
             }
@@ -33,7 +33,7 @@ replace 是字符串提供的一个超级强大的方法，这里只介绍简单
 ```javascript
 // 最基础的使用
 '123'.replace('1', 'A') // 'A23'
-'lalala 2Awby0x2'.replace(/2(.*)2/, '$1') // 'lalala Awby0x'
+'lalala 2Away0x2'.replace(/2(.*)2/, '$1') // 'lalala Away0x'
 
 // trim
 const trim = str => str.replace(/(^\s*)|(\s*$)/g, '')
@@ -99,6 +99,7 @@ function tpl (str, data) {
     })
 }
 ```
+
 ### 优缺点
 - 优点: 简单
 - 缺点: 无法在模板中使用表达式，所有数据都得事先计算好再填入，且填充的数据应为基础类型，灵活性差，难以满足复杂的需求
@@ -115,8 +116,8 @@ function tpl (str, data) {
 ```javascript
 // 特性一:多行
 `123123
- 23213
-`
+ 23213`
+
 // 特性二: 字符串中可插值（强大的不要不要的）
 /* 作为一门伪函数式编程语言，js 的很多语法都可以返回数据:
 *    - 表达式: 各种运算符表达式，三目(可用来替代简单的判断语句)
@@ -137,7 +138,13 @@ const str6 = `123${
 console.log([str1, str2, str3, str4, str5, str6].every(s => s === '123tpl456'))
 
 // 特性三: 模板函数 (个人很少用到)
-
+var a = 5, b = 10
+function tag (strArr, ...vals) {
+    console.log(strArr, vals)
+}
+tag`Hello ${ a + b } world ${a * b}`
+// strArr => ['Hello ', ' world ', '']
+// vals   => [15, 30]  (${}里的值)
 ```
 
 ### 案例
@@ -153,5 +160,19 @@ console.log([str1, str2, str3, str4, str5, str6].every(s => s === '123tpl456'))
 ***
 
 ## new Function
+### 介绍
+
+### 原理
+
+### 实现
+- 测试了下，我们这个 模板工具 的性能略优于 underscore.template，但比 Mustache 要差一些
+[演示](https://github.com/Away0x/learning-template/blob/master/src/eval/index.html)
+[代码](https://github.com/Away0x/learning-template/blob/master/src/eval/tpl.js)
+
+### 资料
+- [详细语法](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function)
+- [只有20行Javascript代码！手把手教你写一个页面模板引擎](http://blog.jobbole.com/56689/)
 
 ***
+
+[完整代码 github](https://github.com/Away0x/learning-template)

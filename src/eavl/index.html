@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>模板引擎</title>
+    <script src="tpl.js"></script>
+</head>
+<body>
+    <div id="show"></div>
+    <div id="show2"></div>
+    <template id="tpl">
+        {@ var name = 'tpl' @}
+        <h1>{{ name | upper | reverse }}</h1>
+    	<p>{{ data.text }}</p>
+        <!-- lkasdasd {{a}} <asd> -->
+        {# 123123213 #}
+        {@ if( data.con > 20 ) { @}
+        	<p>ifififififif</p>
+    	{@ } else { @}
+        	<p>elseelseelseelse</p>
+    	{@ } @}
+
+        {@ for(var i = 0; i < data.list.length; i++) { @}
+	    	<p>循环 {{ i + 1 }}次: {{ data.list[i] }}</p>
+    	{@ } @}
+    </template>
+
+    <!-- 语法模式实现 -->
+    <template id=tpl2>
+        {@ var name = 'TPL2' @}
+        <h1>{{ name | lower }}</h1>
+    	<p>{{ data.text }}</p>
+        <!-- lkasdasd {{a}} <asd> -->
+        {# 123123213 #}
+
+        {@ if data.con > 20 @}
+            <p>ifififififif</p>
+        {@ elif data.con === 20 @}
+            <p>elseelseelseelseifififififif</p>
+        {@ else @}
+            <p>elseelseelseelse</p>
+        {/@ if @}
+
+        {@ each data.list as item @}
+            <p>循环 {{ index + 1 }} 次: {{ item }}</p>
+        {/@ each @}
+    </template>
+
+
+    <script>
+        const data = {
+        	con: 10,
+            text: '啦啦啦啦啦',
+            list: [1,2,3,4,5,76,87,8]
+        }
+
+        const tplstr = document.getElementById('tpl').innerHTML
+        document.getElementById('show').innerHTML = tpl().compile(tplstr, data)
+
+        const tplstr2 = document.getElementById('tpl2').innerHTML
+        document.getElementById('show2').innerHTML = tpl({
+            syntax: true // 开启语法模式
+        }).compile(tplstr2, data)
+    </script>
+</body>
+</html>
