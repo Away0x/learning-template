@@ -166,8 +166,8 @@ tag`Hello ${ a + b } world ${a * b}`
 
 ### 实现
 - 测试了下，我们这个 模板工具 的性能略优于 underscore.template，但比 Mustache 要差一些
-[演示](https://github.com/Away0x/learning-template/blob/master/src/eval/index.html)
-[代码](https://github.com/Away0x/learning-template/blob/master/src/eval/tpl.js)
+- [演示]http://codepen.io/Away0x/pen/JWqgLw)
+- [代码](https://github.com/Away0x/learning-template/blob/master/src/eval/tpl.js)
 
 ### 资料
 - [详细语法](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function)
