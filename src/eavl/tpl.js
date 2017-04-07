@@ -1,9 +1,13 @@
 const Filters = {
     upper: str => str.toUpperCase(),
     lower: str => str.toLowerCase(),
-    reverse: str => str.split('').reverse().join('')
+    reverse: str => str.split('').reverse().join(''),
+    escape: str => string.replace(/&(?!\w+;)/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
 }
-
+// /([\\s\\S]+?)/
 class Tpl {
     constructor (config={}) {
         const defaultConfig = {
@@ -20,7 +24,7 @@ class Tpl {
         this.config = Object.assign({}, defaultConfig, config)
         // ['{{', '}}'] => /{{([\\s\\S]+?)}}/g 构造正则
         Object.keys(this.config.signs).forEach(key => {
-            this.config.signs[key].splice(1, 0, '([\\s\\S]+?)')
+            this.config.signs[key].splice(1, 0, '(.+?)')
             this.config.signs[key] = new RegExp(this.config.signs[key].join(''), 'g')
         })
     }
@@ -51,9 +55,7 @@ class Tpl {
             // 注释
     		.replace( this.config.signs.noCommentSign, () => '')
     		.replace( this.config.signs.commentSign, (match, p) => {
-                const exp = p.replace(/[\{\<\}\>]/g, match => {
-                    return `&*&${match.charCodeAt()}&*&`
-                })
+                const exp = p.replace(/[\{\<\}\>]/g, match => `&*&${match.charCodeAt()}&*&`)
     			return `'+'<!-- ${exp} -->'+'`
     		})
             // 表达式
