@@ -2,12 +2,12 @@ const Filters = {
     upper: str => str.toUpperCase(),
     lower: str => str.toLowerCase(),
     reverse: str => str.split('').reverse().join(''),
-    escape: str => string.replace(/&(?!\w+;)/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
+    escape: str => str.replace(/&(?!\w+;)/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
 }
-// /([\\s\\S]+?)/
+
 class Tpl {
     constructor (config={}) {
         const defaultConfig = {
@@ -58,7 +58,7 @@ class Tpl {
                 const exp = p.replace(/[\{\<\}\>]/g, match => `&*&${match.charCodeAt()}&*&`)
     			return `'+'<!-- ${exp} -->'+'`
     		})
-            // 表达式
+            // 变量/表达式
     		.replace( this.config.signs.varSign, (match, p) => {
                 const filterIndex = p.indexOf('|')
                 let val = p
@@ -74,10 +74,10 @@ class Tpl {
                             throw new Error(`没有 ${filterName} 过滤器`)
                             return
                         }
-
                         return `Filters['${filterName}'](${curVal})`
                     }, oldVal)
                 }
+                console.log(val)
                 return `'+(${val})+'`
             })
             // 语句

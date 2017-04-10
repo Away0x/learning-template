@@ -27,8 +27,8 @@
 
     <!-- 语法模式实现 -->
     <template id=tpl2>
-        {@ var name = 'TPL2' @}
-        <h1>{{ name | lower }}</h1>
+        {@ var name = 'TPL2<script>alert(123)</script>' @}
+        <h1>{{ name | lower | escape }}</h1>
     	<p>{{ data.text }}</p>
         <!-- lkasdasd {{a}} <asd> -->
         {# 123123213 #}
